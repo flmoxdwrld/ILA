@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Surat Cinta Jatuh</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fff0f0;
+      overflow: hidden;
+      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+    }
+
+    .envelope-button {
+      position: absolute;
+      top: -100px; /* mulai di luar layar */
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffff;
+      border: 2px solid #d62828;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: clamp(18px, 4vw, 28px);
+      color: #d62828;
+      cursor: pointer;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: dropToCenter 2.5s ease-out forwards;
+      z-index: 10;
+    }
+
+    @keyframes dropToCenter {
+      to {
+        top: 45%;
+      }
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 24px 32px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 24px;
+      color: #e63946;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    .flower {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      top: -50px;
+      animation: fall linear;
+      pointer-events: none;
+    }
+
+    .petal {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: #e63946;
+      border-radius: 50% 50% 0 0;
+      transform-origin: bottom center;
+      opacity: 0.85;
+    }
+
+    .petal:nth-child(1) { transform: rotate(0deg) translateY(-15px); }
+    .petal:nth-child(2) { transform: rotate(60deg) translateY(-15px); }
+    .petal:nth-child(3) { transform: rotate(120deg) translateY(-15px); }
+    .petal:nth-child(4) { transform: rotate(180deg) translateY(-15px); }
+    .petal:nth-child(5) { transform: rotate(240deg) translateY(-15px); }
+    .petal:nth-child(6) { transform: rotate(300deg) translateY(-15px); }
+
+    .center {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: #ffdd57;
+      border-radius: 50%;
+      top: 14px;
+      left: 14px;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Surat cinta jatuh ke tengah -->
+  <button class="envelope-button" onclick="showLove()">
+    💌 Hai Love
+  </button>
+
+  <!-- Pop-up isi cinta -->
+  <div class="modal" id="loveModal" onclick="hideLove()">
+    <div class="modal-content">
+      I love you, bae 💖
+    </div>
+  </div>
+
+  <script>
+    function showLove() {
+      document.getElementById("loveModal").style.display = "flex";
+    }
+
+    function hideLove() {
+      document.getElementById("loveModal").style.display = "none";
+    }
+
+    function createFallingFlower() {
+      const flower = document.createElement("div");
+      flower.className = "flower";
+      flower.style.left = Math.random() * 100 + "vw";
+
+      const duration = Math.random() * 5 + 5;
+      flower.style.animationDuration = duration + "s";
+
+      for (let i = 0; i < 6; i++) {
+        const petal = document.createElement("div");
+        petal.className = "petal";
+        flower.appendChild(petal);
+      }
+
+      const center = document.createElement("div");
+      center.className = "center";
+      flower.appendChild(center);
+
+      document.body.appendChild(flower);
+      setTimeout(() => flower.remove(), duration * 1000);
+    }
+
+    setInterval(createFallingFlower, 250);
+  </script>
+
+</body>
+</html>
